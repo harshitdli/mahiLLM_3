@@ -1,0 +1,136 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isValidUser() {
+      return isAuthenticated() && 
+        request.auth.token.email_verified == true;
+    }
+    
+    function isValidReportData() {
+      return request.resource.data.keys().hasAll(['title', 'userId', 'createdAt']) &&
+        request.resource.data.userId == request.auth.uid;
+    }
+    
+    // Users collection - users can read/write their own data
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId) && 
+        request.resource.data.keys().hasAll(['uid', 'email', 'createdAt']) &&
+        request.resource.data.uid == request.auth.uid;
+      allow update: if isOwner(userId) && 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName', 'photoURL', 'preferences', 'lastLoginAt', 'updatedAt']);
+      allow delete: if isAdmin();
+    }
+    
+    // Reports collection - users can read/write their own reports
+    match /reports/{reportId} {
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      allow create: if isValidReportData();
+      allow update: if isOwner(resource.data.userId) && 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['title', 'description', 'data', 'insights', 'charts', 'status', 'updatedAt']);
+      allow delete: if isOwner(resource.data.userId) || isAdmin();
+    }
+    
+    // User sessions collection - for tracking user sessions
+    match /user_sessions/{sessionId} {
+      allow read, write: if isOwner(resource.data.userId);
+    }
+    
+    // Admin collection - only admins can access
+    match /admin/{document} {
+      allow read, write: if isAdmin();
+    }
+    
+    // System settings collection - only admins can access
+    match /system_settings/{settingId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Analytics collection - users can write their own analytics
+    match /analytics/{analyticsId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId);
+      allow delete: if isAdmin();
+    }
+    
+    // Usage tracking collection - users can read their own, admins can read all
+    match /usage_tracking/{usageId} {
+      allow read: if isOwner(resource.data.userId) || isAdmin();
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId);
+      allow delete: if isAdmin();
+    }
+    
+    // Model access logs - for tracking model usage
+    match /model_access_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId);
+      allow delete: if isAdmin();
+    }
+    
+    // Feedback collection - users can create feedback, admins can read all
+    match /feedback/{feedbackId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId);
+      allow delete: if isAdmin();
+    }
+    
+    // Newsletter subscriptions - public read for email verification
+    match /newsletter_subscriptions/{subscriptionId} {
+      allow read: if isAuthenticated();
+      allow create: if request.resource.data.email != null;
+      allow update: if isOwner(resource.data.userId);
+      allow delete: if isOwner(resource.data.userId) || isAdmin();
+    }
+    
+    // API keys collection - users can manage their own API keys
+    match /api_keys/{keyId} {
+      allow read: if isOwner(resource.data.userId);
+      allow create: if isAuthenticated() && 
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId) && 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'description', 'lastUsedAt', 'isActive']);
+      allow delete: if isOwner(resource.data.userId) || isAdmin();
+    }
+    
+    // Rate limiting collection - system managed
+    match /rate_limits/{limitId} {
+      allow read: if isAdmin();
+      allow write: if false; // Only server-side functions can write
+    }
+    
+    // Audit logs - only admins can read
+    match /audit_logs/{logId} {
+      allow read: if isAdmin();
+      allow write: if false; // Only server-side functions can write
+    }
+    
+    // Default deny rule
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

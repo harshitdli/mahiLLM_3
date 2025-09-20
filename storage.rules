@@ -1,0 +1,97 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isValidImageFile() {
+      return request.resource.contentType.matches('image/.*') &&
+        request.resource.size < 10 * 1024 * 1024; // 10MB limit
+    }
+    
+    function isValidDataFile() {
+      return request.resource.contentType.matches('application/.*') &&
+        request.resource.size < 100 * 1024 * 1024; // 100MB limit
+    }
+    
+    // User profile images
+    match /user-profiles/{userId}/{allPaths=**} {
+      allow read: if true; // Profile images are public
+      allow write: if isOwner(userId) && isValidImageFile();
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+    
+    // User uploaded data files
+    match /user-data/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId) && isValidDataFile();
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+    
+    // Generated reports and charts
+    match /reports/{userId}/{reportId}/{allPaths=**} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId);
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+    
+    // Temporary files (auto-delete after 24 hours)
+    match /temp/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId);
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+    
+    // System assets (logos, templates, etc.)
+    match /system/{allPaths=**} {
+      allow read: if true; // System assets are public
+      allow write: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // Model assets and datasets
+    match /models/{allPaths=**} {
+      allow read: if true; // Model assets are public
+      allow write: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // API response cache
+    match /cache/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId);
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+    
+    // Backup files
+    match /backups/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // Analytics exports
+    match /analytics-exports/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId);
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+    
+    // Default deny rule
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

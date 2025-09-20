@@ -1,5 +1,5 @@
-// Firebase Configuration and Setup
-import { initializeApp } from 'firebase/app';
+// Firebase Configuration and Setup for MahiLLM
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { 
     getAuth, 
     GoogleAuthProvider, 
@@ -11,8 +11,9 @@ import {
     onAuthStateChanged,
     updateProfile,
     sendPasswordResetEmail,
-    sendEmailVerification
-} from 'firebase/auth';
+    sendEmailVerification,
+    connectAuthEmulator
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { 
     getFirestore, 
     doc, 
@@ -24,29 +25,95 @@ import {
     query, 
     where, 
     getDocs,
-    serverTimestamp
-} from 'firebase/firestore';
+    serverTimestamp,
+    connectFirestoreEmulator
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 // Firebase Configuration
-// Replace with your actual Firebase config
 const firebaseConfig = {
-    apiKey: "your-api-key-here",
-    authDomain: "mahillm-project.firebaseapp.com",
-    projectId: "mahillm-project",
-    storageBucket: "mahillm-project.appspot.com",
-    messagingSenderId: "123456789",
-    appId: "your-app-id-here",
-    measurementId: "your-measurement-id"
+    apiKey: "AIzaSyBPzPkNxaEKFot_J2Rp_GxtkWdP2xx-8Fw", // Actual API key provided
+    authDomain: "mahillm-ai-platform.firebaseapp.com",
+    projectId: "mahillm-ai-platform",
+    storageBucket: "mahillm-ai-platform.firebasestorage.app",
+    messagingSenderId: "523805933280",
+    appId: "1:523805933280:web:fb9de9776b34d2a35a1a85",
+    measurementId: "G-BVME0L0FPN"
+};
+
+// Environment-based configuration
+const getFirebaseConfig = () => {
+    const isDevelopment = window.location.hostname === 'localhost' || 
+                         window.location.hostname === '127.0.0.1' ||
+                         window.location.hostname.includes('localhost');
+
+    // You can have different configs for development and production
+    if (isDevelopment) {
+        return {
+            ...firebaseConfig,
+            // Development-specific overrides can go here
+        };
+    }
+
+    return firebaseConfig;
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(getFirebaseConfig());
 
 // Initialize Firebase Authentication
 export const auth = getAuth(app);
 
 // Initialize Firestore
 export const db = getFirestore(app);
+
+// Initialize Storage
+export const storage = getStorage(app);
+
+// Initialize Analytics (only in production and if supported)
+let analytics = null;
+if (typeof window !== 'undefined') {
+    isSupported().then((supported) => {
+        if (supported && !window.location.hostname.includes('localhost')) {
+            analytics = getAnalytics(app);
+        }
+    });
+}
+
+// Connect to emulators in development (uncomment if using emulators)
+if (typeof window !== 'undefined' && 
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    
+    // Uncomment these lines if you want to use Firebase emulators for development
+    // connectAuthEmulator(auth, 'http://localhost:9099');
+    // connectFirestoreEmulator(db, 'localhost', 8080);
+}
+
+// Firebase configuration validation
+const validateFirebaseConfig = () => {
+    const config = getFirebaseConfig();
+    const requiredFields = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'messagingSenderId', 'appId'];
+    
+    const missingFields = requiredFields.filter(field => 
+        !config[field] || config[field].includes('your-') || config[field].includes('XXX')
+    );
+    
+    if (missingFields.length > 0) {
+        console.warn('⚠️ Firebase configuration incomplete. Missing or placeholder values for:', missingFields);
+        console.warn('Please update firebase-config.js with your actual Firebase project configuration.');
+        console.warn('See firebase-setup.md for detailed setup instructions.');
+        return false;
+    }
+    
+    console.log('✅ Firebase configuration validated successfully');
+    return true;
+};
+
+// Validate configuration on load
+if (typeof window !== 'undefined') {
+    validateFirebaseConfig();
+}
 
 // Configure Auth Providers
 const googleProvider = new GoogleAuthProvider();
@@ -336,6 +403,17 @@ export {
     GoogleAuthProvider,
     FacebookAuthProvider
 };
+
+// Export Firebase services and utilities
+export { 
+    storage, 
+    analytics,
+    getFirebaseConfig,
+    validateFirebaseConfig
+};
+
+// Export app instance for advanced usage
+export default app;
 
 // Utility functions
 export const authUtils = {
