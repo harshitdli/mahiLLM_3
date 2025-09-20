@@ -1,38 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sign Up - MahiLLM</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Sign Up</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Sign Up</h1>
-        <form id="signupForm">
-            <div class="form-group">
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" required>
-            </div>
-            <div class="form-group">
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" required>
-            </div>
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn-primary">Sign Up</button>
-            <button type="button" class="btn-secondary" id="googleSignUp">Sign Up with Google</button>
-        </form>
-        <p>Already have an account? <a href="login.html">Log In</a></p>
-    </div>
+    <h1>Sign Up</h1>
+    <form id="signupForm">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Log In</a></p>
     <script src="auth.js"></script>
 </body>
 </html>
