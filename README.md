@@ -364,7 +364,7 @@ import { connectFirestoreEmulator } from 'firebase/firestore';
 For support and questions:
 
 - **Email**: btech10130.23@bitmesra.ac.in
-- **Phone**: +91 9508743874
+- **Phone**: 
 - **Location**: BIT Mesra, Ranchi
 
 ## 📄 License
