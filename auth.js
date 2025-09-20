@@ -1,28 +1,11 @@
 // auth.js
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyBPzPkNxaEKFot_J2Rp_GxtkWdP2xx-8Fw",
-    authDomain: "mahillm-ai-platform.firebaseapp.com",
-    projectId: "mahillm-ai-platform",
-    storageBucket: "mahillm-ai-platform.firebasestorage.app",
-    messagingSenderId: "523805933280",
-    appId: "1:523805933280:web:fb9de9776b34d2a35a1a85",
-    measurementId: "G-BVME0L0FPN"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Initialize Firebase Authentication
-const auth = getAuth(app);
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from './firebase-config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signupForm');
     const loginForm = document.getElementById('loginForm');
+    const googleSignUpBtn = document.getElementById('googleSignUp');
 
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
@@ -59,6 +42,27 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 console.error('Log in error:', error.message);
                 alert('Log in failed: ' + error.message);
+            }
+        });
+    }
+
+    if (googleSignUpBtn) {
+        googleSignUpBtn.addEventListener('click', async () => {
+            const provider = new GoogleAuthProvider();
+
+            try {
+                const result = await signInWithPopup(auth, provider);
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                console.log('Google sign-up successful:', user);
+                alert('Google sign-up successful! User: ' + user.displayName);
+                // You can redirect to dashboard here
+            } catch (error) {
+                console.error('Google sign-up error:', error);
+                alert('Google sign-up failed: ' + error.message);
             }
         });
     }
