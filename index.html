@@ -24,6 +24,7 @@
                 <li><a href="#features">Features</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#performance">Performance</a></li>
+                <li><a href="#model-access">Model Access</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="https://huggingface.co" target="_blank" class="hugging-face-link">
                     <i class="fab fa-hugging-face"></i> Hugging Face
@@ -44,9 +45,10 @@
         <div class="hero-content">
             <h1 class="hero-title">From Data to Insights, Effortlessly</h1>
             <p class="hero-description">
-                MahiLLM transforms your raw data into meaningful insights using the power of LLaMA 2-7B. 
-                Generate detailed reports, stunning graphs, and comprehensive summaries automatically. 
-                Perfect for professionals who value efficiency without sacrificing clarity.
+                MahiLLM leverages the cutting-edge LLaMA 2-7B model to revolutionize how you analyze data. 
+                Our AI doesn't just process numbers—it understands context, identifies patterns, and generates 
+                actionable insights that drive real business value. From complex datasets to simple spreadsheets, 
+                transform your data into compelling narratives and stunning visualizations in seconds, not hours.
             </p>
             <div class="hero-actions">
                 <button class="btn-primary btn-large">Get Started Free</button>
@@ -150,7 +152,7 @@
                     <div class="pricing-header">
                         <h3>Free</h3>
                         <div class="price">
-                            <span class="currency">$</span>
+                            <span class="currency">₹</span>
                             <span class="amount">0</span>
                             <span class="period">/month</span>
                         </div>
@@ -166,10 +168,10 @@
                 <div class="pricing-card featured">
                     <div class="pricing-badge">Most Popular</div>
                     <div class="pricing-header">
-                        <h3>Pro</h3>
+                        <h3>Plus</h3>
                         <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">29</span>
+                            <span class="currency">₹</span>
+                            <span class="amount">250</span>
                             <span class="period">/month</span>
                         </div>
                     </div>
@@ -187,13 +189,13 @@
                     <div class="pricing-header">
                         <h3>Enterprise</h3>
                         <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">99</span>
+                            <span class="currency">₹</span>
+                            <span class="amount">Custom</span>
                             <span class="period">/month</span>
                         </div>
                     </div>
                     <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Everything in Pro</li>
+                        <li><i class="fas fa-check"></i> Everything in Plus</li>
                         <li><i class="fas fa-check"></i> White-label solution</li>
                         <li><i class="fas fa-check"></i> On-premise deployment</li>
                         <li><i class="fas fa-check"></i> Dedicated support</li>
@@ -303,6 +305,54 @@
         </div>
     </section>
 
+    <!-- Model Access Section -->
+    <section id="model-access" class="model-access">
+        <div class="container">
+            <div class="section-header">
+                <h2>Access the Model</h2>
+                <p>Try MahiLLM's LLaMA 2-7B model directly or get admin access</p>
+            </div>
+            <div class="model-access-content">
+                <div class="access-options">
+                    <div class="access-card">
+                        <div class="access-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h3>Try the Model</h3>
+                        <p>Experience MahiLLM's capabilities with our interactive demo. Upload your data and see instant insights.</p>
+                        <div class="demo-features">
+                            <span class="feature-tag">Upload CSV/Excel</span>
+                            <span class="feature-tag">Generate Reports</span>
+                            <span class="feature-tag">Create Charts</span>
+                        </div>
+                        <button class="btn-primary" onclick="showModelDemo()">Try Demo</button>
+                    </div>
+                    <div class="access-card admin-card">
+                        <div class="access-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3>Admin Access</h3>
+                        <p>Get full administrative access to MahiLLM's backend, model configurations, and advanced features.</p>
+                        <div class="admin-features">
+                            <span class="feature-tag">Model Configuration</span>
+                            <span class="feature-tag">User Management</span>
+                            <span class="feature-tag">Analytics Dashboard</span>
+                        </div>
+                        <button class="btn-outline" onclick="requestAdminAccess()">Request Admin Access</button>
+                    </div>
+                </div>
+                <div class="google-auth-section">
+                    <h3>Sign In with Google</h3>
+                    <p>Secure authentication for seamless access to all features</p>
+                    <button class="google-signin-btn" onclick="signInWithGoogle()">
+                        <i class="fab fa-google"></i>
+                        Continue with Google
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
@@ -315,21 +365,21 @@
                             <i class="fas fa-envelope"></i>
                             <div>
                                 <h4>Email Us</h4>
-                                <p>hello@mahillm.com</p>
+                                <p>btech10130.23@bitmesra.ac.in</p>
                             </div>
                         </div>
                         <div class="contact-method">
                             <i class="fas fa-phone"></i>
                             <div>
                                 <h4>Call Us</h4>
-                                <p>+1 (555) 123-4567</p>
+                                <p>+91 9508743874</p>
                             </div>
                         </div>
                         <div class="contact-method">
                             <i class="fas fa-map-marker-alt"></i>
                             <div>
                                 <h4>Visit Us</h4>
-                                <p>San Francisco, CA</p>
+                                <p>BIT Mesra, Ranchi</p>
                             </div>
                         </div>
                     </div>
@@ -355,16 +405,76 @@
         </div>
     </section>
 
+    <!-- Contact Me Section -->
+    <section class="contact-me">
+        <div class="container">
+            <div class="contact-me-content">
+                <div class="contact-me-info">
+                    <h2>Direct Contact</h2>
+                    <p>Want to reach out directly? Send me a message and I'll get back to you personally.</p>
+                    <div class="direct-contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-user"></i>
+                            <span>Harshit (Developer)</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>BIT Mesra, Ranchi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-me-form">
+                    <form id="contactMeForm">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <select name="subject" required>
+                                <option value="">Select Subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="admin">Admin Access Request</option>
+                                <option value="collaboration">Collaboration</option>
+                                <option value="support">Technical Support</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary btn-full">Send Direct Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Newsletter Section -->
     <section class="newsletter">
         <div class="container">
             <div class="newsletter-content">
-                <h2>Stay Updated</h2>
-                <p>Get the latest updates on MahiLLM features, AI insights, and data analysis tips.</p>
+                <h2>Stay Updated with MahiLLM</h2>
+                <p>Get exclusive access to new features, AI insights, data analysis tips, and early access to model updates.</p>
+                <div class="newsletter-benefits">
+                    <div class="benefit">
+                        <i class="fas fa-bell"></i>
+                        <span>Feature Updates</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-chart-line"></i>
+                        <span>AI Insights</span>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-rocket"></i>
+                        <span>Early Access</span>
+                    </div>
+                </div>
                 <form id="newsletterForm" class="newsletter-form">
                     <input type="email" placeholder="Enter your email address" required>
-                    <button type="submit" class="btn-primary">Subscribe</button>
+                    <button type="submit" class="btn-primary">Subscribe Now</button>
                 </form>
+                <p class="newsletter-note">Join 1000+ data professionals already subscribed</p>
             </div>
         </div>
     </section>

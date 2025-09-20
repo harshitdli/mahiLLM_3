@@ -85,6 +85,15 @@ function initFormHandling() {
             handleNewsletterForm(this);
         });
     }
+    
+    // Contact Me Form
+    const contactMeForm = document.getElementById('contactMeForm');
+    if (contactMeForm) {
+        contactMeForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleContactMeForm(this);
+        });
+    }
 }
 
 // Handle Contact Form Submission
@@ -119,11 +128,31 @@ function handleNewsletterForm(form) {
     
     // Simulate subscription (replace with actual API call)
     setTimeout(() => {
-        showNotification('Successfully subscribed to our newsletter!', 'success');
+        showNotification('Successfully subscribed to our newsletter! You\'ll receive updates on new features and AI insights.', 'success');
         form.reset();
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
     }, 1500);
+}
+
+// Handle Contact Me Form Submission
+function handleContactMeForm(form) {
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    
+    // Show loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    
+    // Simulate sending direct message (replace with actual email service)
+    setTimeout(() => {
+        showNotification('Message sent successfully! I\'ll get back to you personally within 24 hours.', 'success');
+        form.reset();
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }, 2000);
 }
 
 // Show Notification
@@ -553,9 +582,101 @@ const debouncedScrollHandler = debounce(function() {
 
 window.addEventListener('scroll', debouncedScrollHandler);
 
+// Google Authentication
+function signInWithGoogle() {
+    // Show loading state
+    showNotification('Redirecting to Google Sign-In...', 'info');
+    
+    // Simulate Google OAuth (replace with actual Google OAuth implementation)
+    setTimeout(() => {
+        showNotification('Successfully signed in with Google! Welcome to MahiLLM.', 'success');
+        // Here you would typically redirect to dashboard or update UI state
+    }, 2000);
+}
+
+// Model Demo
+function showModelDemo() {
+    const modal = createModal('Model Demo', `
+        <div class="demo-content">
+            <div class="demo-upload">
+                <h4>Upload Your Data</h4>
+                <div class="upload-area">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag & drop your CSV/Excel file here</p>
+                    <button class="btn-primary">Choose File</button>
+                </div>
+            </div>
+            <div class="demo-preview">
+                <h4>Sample Output</h4>
+                <div class="output-preview">
+                    <div class="preview-chart">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Generated Chart</p>
+                    </div>
+                    <div class="preview-insights">
+                        <h5>Key Insights:</h5>
+                        <ul>
+                            <li>Revenue increased by 23% this quarter</li>
+                            <li>Top performing category: Technology</li>
+                            <li>Customer satisfaction: 94%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-primary btn-full">Try with Your Data</button>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+}
+
+// Request Admin Access
+function requestAdminAccess() {
+    const modal = createModal('Request Admin Access', `
+        <div class="admin-request-content">
+            <div class="admin-info">
+                <h4>Admin Access Features</h4>
+                <ul>
+                    <li>Full model configuration control</li>
+                    <li>User management and permissions</li>
+                    <li>Analytics and usage dashboard</li>
+                    <li>API key management</li>
+                    <li>System monitoring</li>
+                </ul>
+            </div>
+            <form id="adminRequestForm">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="organization" placeholder="Organization/Company" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="reason" placeholder="Reason for admin access request" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Submit Request</button>
+            </form>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+    
+    // Handle admin request form
+    const form = modal.querySelector('#adminRequestForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        showNotification('Admin access request submitted! I\'ll review and respond within 24 hours.', 'success');
+        closeModal(modal);
+    });
+}
+
 // Console welcome message
 console.log(`
 🚀 Welcome to MahiLLM!
 Built with ❤️ using LLaMA 2-7B
 Transform your data into insights effortlessly.
+Contact: btech10130.23@bitmesra.ac.in
 `);
