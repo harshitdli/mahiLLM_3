@@ -244,9 +244,110 @@
                 <p>Don't have an account? <a href="#" onclick="showSignUp()">Sign up</a></p>
                 <p><a href="#" onclick="showForgotPassword()">Forgot your password?</a></p>
             </div>
+            
+            <!-- Sign Up Form (Hidden by default) -->
+            <div id="signUpForm" class="auth-form" style="display: none;">
+                <div class="form-group">
+                    <label for="signupName" class="form-label">Full Name</label>
+                    <input type="text" id="signupName" name="displayName" class="form-input" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupEmail" class="form-label">Email</label>
+                    <input type="email" id="signupEmail" name="email" class="form-input" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword" class="form-label">Password</label>
+                    <input type="password" id="signupPassword" name="password" class="form-input" placeholder="Create a password" required>
+                </div>
+                
+                <button type="button" id="signupBtn" class="btn-primary btn-full">
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </button>
+            </div>
+            
+            <!-- Forgot Password Form (Hidden by default) -->
+            <div id="forgotPasswordForm" class="auth-form" style="display: none;">
+                <div class="form-group">
+                    <label for="resetEmail" class="form-label">Email</label>
+                    <input type="email" id="resetEmail" name="email" class="form-input" placeholder="Enter your email" required>
+                </div>
+                
+                <button type="button" id="resetBtn" class="btn-primary btn-full">
+                    <i class="fas fa-envelope"></i>
+                    Send Reset Email
+                </button>
+            </div>
         </div>
     </div>
 
-    <script src="auth.js"></script>
+    <script type="module" src="firebase-auth.js"></script>
+    <script type="module">
+        import { mahiLLMAuth } from './firebase-auth.js';
+        
+        // Handle form submission
+        document.getElementById('authForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            
+            await mahiLLMAuth.signInWithEmail(email, password);
+        });
+        
+        // Handle sign up
+        document.getElementById('signupBtn').addEventListener('click', async () => {
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            await mahiLLMAuth.signUpWithEmail(email, password, name);
+        });
+        
+        // Handle password reset
+        document.getElementById('resetBtn').addEventListener('click', async () => {
+            const email = document.getElementById('resetEmail').value;
+            await mahiLLMAuth.resetPassword(email);
+        });
+        
+        // Store original button text
+        document.addEventListener('DOMContentLoaded', () => {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.setAttribute('data-original-text', submitBtn.innerHTML);
+            }
+        });
+        
+        // Global functions for form switching
+        window.showSignUp = () => {
+            document.getElementById('authForm').style.display = 'none';
+            document.getElementById('signUpForm').style.display = 'flex';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.querySelector('.auth-title').textContent = 'Create Account';
+            document.querySelector('.auth-subtitle').textContent = 'Sign up for your MahiLLM account';
+        };
+        
+        window.showForgotPassword = () => {
+            document.getElementById('authForm').style.display = 'none';
+            document.getElementById('signUpForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'flex';
+            document.querySelector('.auth-title').textContent = 'Reset Password';
+            document.querySelector('.auth-subtitle').textContent = 'Enter your email to receive reset instructions';
+        };
+        
+        // Back to sign in
+        document.addEventListener('click', (e) => {
+            if (e.target.textContent === 'Back to Sign In' || e.target.textContent === 'Sign in') {
+                document.getElementById('authForm').style.display = 'flex';
+                document.getElementById('signUpForm').style.display = 'none';
+                document.getElementById('forgotPasswordForm').style.display = 'none';
+                document.querySelector('.auth-title').textContent = 'Welcome back';
+                document.querySelector('.auth-subtitle').textContent = 'Sign in to your account to continue';
+            }
+        });
+    </script>
 </body>
 </html>
