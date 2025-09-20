@@ -18,6 +18,13 @@ A comprehensive AI-powered data analysis platform with Firebase Authentication, 
 - **Gradient Elements** and animated blobs
 - **Responsive Design** for all devices
 
+### 🤗 Hugging Face Integration
+- **Organization Profile** integration with [MahiLLM on Hugging Face](https://huggingface.co/MahiLLM)
+- **Real-time Stats** display for followers, models, and datasets
+- **Model Preview** cards with detailed specifications
+- **Interactive Demos** and coming soon features
+- **Community Engagement** tools and tracking
+
 ### 🤖 Advanced AI Features
 - **Integrated AI Chatbot** with contextual responses
 - **On-Site Content Generation** (Text, Insights, Charts)
@@ -194,6 +201,7 @@ mahillm/
 ├── firebase-auth.js        # Authentication system
 ├── backend-api.js          # Backend API integration
 ├── advanced-features.js    # Advanced OpenAI features
+├── huggingface-integration.js # Hugging Face integration
 ├── dashboard.js            # Dashboard functionality
 ├── auth.js                 # Legacy auth (deprecated)
 └── api.js                  # Mock API (development)
