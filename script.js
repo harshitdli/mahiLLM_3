@@ -770,7 +770,7 @@ function signInWithGoogle() {
 // Console welcome message
 console.log(`
 🚀 Welcome to MahiLLM!
-Built with ❤️ using LLaMA 2-7B
+Built with ❤️ Harsh & Arsh
 Transform your data into insights effortlessly.
 Contact: btech10130.23@bitmesra.ac.in
 
