@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MahiLLM - From Data to Insights, Effortlessly</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Söhne:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -14,10 +14,12 @@
         <nav class="nav">
             <div class="nav-brand">
                 <div class="logo">
-                    <i class="fas fa-brain"></i>
+                    <div class="logo-icon">
+                        <div class="logo-circle"></div>
+                        <div class="logo-dot"></div>
+                    </div>
                     <span>MahiLLM</span>
                 </div>
-                <p class="tagline">AI-Powered Data Insights</p>
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
@@ -26,61 +28,77 @@
                 <li><a href="#performance">Performance</a></li>
                 <li><a href="#model-access">Model Access</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="https://huggingface.co" target="_blank" class="hugging-face-link">
-                    <i class="fab fa-hugging-face"></i> Hugging Face
+                <li><a href="https://huggingface.co" target="_blank" class="external-link">
+                    Hugging Face <i class="fas fa-external-link-alt"></i>
                 </a></li>
             </ul>
             <div class="nav-actions">
-                <button class="btn-secondary">Sign Up</button>
-                <button class="btn-primary">See Demo</button>
+                <button class="btn-login">Log in</button>
+                <button class="btn-primary">Sign up</button>
             </div>
             <div class="mobile-menu-toggle">
-                <i class="fas fa-bars"></i>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">From Data to Insights, Effortlessly</h1>
-            <p class="hero-description">
-                MahiLLM leverages the cutting-edge LLaMA 2-7B model to revolutionize how you analyze data. 
-                Our AI doesn't just process numbers—it understands context, identifies patterns, and generates 
-                actionable insights that drive real business value. From complex datasets to simple spreadsheets, 
-                transform your data into compelling narratives and stunning visualizations in seconds, not hours.
-            </p>
-            <div class="hero-actions">
-                <button class="btn-primary btn-large">Get Started Free</button>
-                <button class="btn-outline btn-large">Watch Demo</button>
-            </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number">7B</span>
-                    <span class="stat-label">Parameters</span>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>Powered by LLaMA 2-7B</span>
                 </div>
-                <div class="stat">
-                    <span class="stat-number">99.9%</span>
-                    <span class="stat-label">Uptime</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">10x</span>
-                    <span class="stat-label">Faster Analysis</span>
+                <h1 class="hero-title">
+                    Transform your data into 
+                    <span class="gradient-text">actionable insights</span>
+                </h1>
+                <p class="hero-description">
+                    MahiLLM leverages cutting-edge AI to revolutionize data analysis. 
+                    From complex datasets to simple spreadsheets, generate compelling narratives 
+                    and stunning visualizations in seconds, not hours.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn-primary btn-large">
+                        Try MahiLLM
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn-secondary btn-large">View examples</button>
                 </div>
             </div>
-        </div>
-        <div class="hero-visual">
-            <div class="data-visualization">
-                <div class="chart-container">
-                    <div class="chart-bar" style="height: 60%"></div>
-                    <div class="chart-bar" style="height: 80%"></div>
-                    <div class="chart-bar" style="height: 45%"></div>
-                    <div class="chart-bar" style="height: 90%"></div>
-                    <div class="chart-bar" style="height: 70%"></div>
-                </div>
-                <div class="insight-bubble">
-                    <i class="fas fa-lightbulb"></i>
-                    <span>AI Insight Generated</span>
+            <div class="hero-visual">
+                <div class="demo-interface">
+                    <div class="interface-header">
+                        <div class="interface-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="interface-title">MahiLLM Dashboard</div>
+                    </div>
+                    <div class="interface-content">
+                        <div class="chart-preview">
+                            <div class="chart-bars">
+                                <div class="bar" style="height: 40%"></div>
+                                <div class="bar" style="height: 70%"></div>
+                                <div class="bar" style="height: 55%"></div>
+                                <div class="bar" style="height: 85%"></div>
+                                <div class="bar" style="height: 60%"></div>
+                            </div>
+                        </div>
+                        <div class="insights-preview">
+                            <div class="insight-item">
+                                <div class="insight-icon">📈</div>
+                                <div class="insight-text">Revenue up 23%</div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-icon">🎯</div>
+                                <div class="insight-text">Top category: Tech</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
