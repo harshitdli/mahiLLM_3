@@ -4,6 +4,7 @@ import {
     getAuth, 
     GoogleAuthProvider, 
     FacebookAuthProvider,
+    GithubAuthProvider,
     signInWithPopup,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
@@ -121,7 +122,15 @@ googleProvider.addScope('email');
 googleProvider.addScope('profile');
 
 const facebookProvider = new FacebookAuthProvider();
+
+const githubProvider = new GithubAuthProvider();
+googleProvider.addScope('email');
+googleProvider.addScope('repo');
 facebookProvider.addScope('email');
+
+const githubProvider = new GithubAuthProvider();
+githubProvider.addScope('read:user');
+githubProvider.addScope('repo');
 
 // Authentication Service Class
 export class FirebaseAuthService {
@@ -379,6 +388,18 @@ export class FirebaseAuthService {
             return await this.currentUser.getIdToken();
         }
         return null;
+    }
+        async signInWithGithub() {
+        try {
+            const result = await signInWithPopup(auth, githubProvider);
+            const user = result.user;
+            
+            console.log('Github Sign-In successful:', user);
+            return { success: true, user };
+        } catch (error) {
+            console.error('Github Sign-In error:', error);
+            return { success: false, error: error.message };
+        }
     }
 
     // Get user ID token with force refresh
