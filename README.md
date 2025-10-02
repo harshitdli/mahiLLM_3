@@ -1,8 +1,8 @@
-# MahiLLM - OpenAI-Inspired AI Platform
+ MahiLLM - OpenAI Inspired AI Platform
 
 A comprehensive AI-powered data analysis platform with Firebase Authentication, advanced features, and OpenAI-inspired design.
 
-## 🚀 Features
+ 🚀 Features
 
 ### 🔐 Authentication System
 - **Firebase Authentication** with Google, Facebook, and Email/Password
